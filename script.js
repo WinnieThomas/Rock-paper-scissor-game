@@ -1,6 +1,6 @@
 const userOption = document.querySelectorAll('.user-option');
 const movesLeft = document.querySelector('.movesleft');
-
+const result = document.querySelector('.result');
 const game =()=>{
     let playerScore = 0;
     let computerScore = 0;
@@ -22,15 +22,15 @@ const game =()=>{
                 const moveLeft = 10 - moves;  
                 movesLeft.innerHTML = 'Move left: '+ moveLeft;
                 if(moveLeft === 0){
-                    gameOver();
+                    gameOver(userOption,movesLeft);
                 }
             
             });
 
         }
+    };
 
         const winner = (userSelection,computerOption) =>{
-            const result = document.querySelector('.result');
             const playerCount = document.querySelector('.p-count');
             const computerCount = document.querySelector('.c-count');
 
@@ -75,8 +75,35 @@ const game =()=>{
             }
         }
 
+        const gameOver = (userOption,movesLeft) =>{
+            for(let i=0;i<userOption;i++){
+                userOption[i].style.display = 'none';
+            }
+            
+            movesLeft.style.display = 'none';
+            const reload = document.querySelector('.reload');
+            const displayStatus = document.querySelector('.move');
+            displayStatus.innerHTML ='Game Over!';
 
-    };
+            if(playerScore == computerScore){
+                result.innerHTML = 'The game is a tie!';
+            }
+            else if(playerScore > computerScore){
+                result.innerHTML = 'You won the game!';
+            }
+            else{
+                result.innerHTML = 'Computer won the game!';
+            }
+           
+            reload.innerHTML ='Restart';
+            reload.style.display = 'flex';
+            reload.addEventListener('click',function(){
+                window.location.reload();
+
+            });
+        
+        }
+
     playGame();
 
 }
